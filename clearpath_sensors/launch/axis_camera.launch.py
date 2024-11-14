@@ -29,9 +29,10 @@
 # POSSIBILITY OF SUCH DAMAGE.
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
 from launch_ros.actions import Node
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
@@ -41,6 +42,14 @@ def generate_launch_description():
     arg_namespace = DeclareLaunchArgument(
         'namespace',
         default_value='')
+
+    arg_parameters = DeclareLaunchArgument(
+        'parameters',
+        default_value=PathJoinSubstitution([
+          FindPackageShare('clearpath_sensors'),
+          'config',
+          'axis_camera.yaml'
+        ]))
 
     axis_node = Node(
         package='axis_camera',
@@ -52,5 +61,6 @@ def generate_launch_description():
 
     ld = LaunchDescription()
     ld.add_action(arg_namespace)
+    ld.add_action(arg_parameters)
     ld.add_action(axis_node)
     return ld
