@@ -230,7 +230,7 @@ class RobotLaunchGenerator(LaunchGenerator):
             self.wireless_watcher_node,
             self.diagnostics_launch,
             self.battery_state_estimator,
-            self.battery_state_control,
+            self.battery_state_control
         ]
 
         if len(self.can_bridges) > 0:
