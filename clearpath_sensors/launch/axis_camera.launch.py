@@ -54,6 +54,7 @@ def generate_launch_description():
     axis_node = Node(
         package='axis_camera',
         executable='axis_camera_node',
+        name='axis_camera',
         namespace=namespace,
         parameters=[parameters],
         output='screen'
