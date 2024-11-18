@@ -38,9 +38,14 @@ from launch_ros.substitutions import FindPackageShare
 def generate_launch_description():
     parameters = LaunchConfiguration('parameters')
     namespace = LaunchConfiguration('namespace')
+    robot_namespace = LaunchConfiguration('robot_namespace')
 
     arg_namespace = DeclareLaunchArgument(
         'namespace',
+        default_value='')
+
+    arg_robot_namespace = DeclareLaunchArgument(
+        'robot_namespace',
         default_value='')
 
     arg_parameters = DeclareLaunchArgument(
@@ -57,11 +62,16 @@ def generate_launch_description():
         name='axis_camera',
         namespace=namespace,
         parameters=[parameters],
-        output='screen'
+        output='screen',
+        remappings=[
+            ('~image_raw/compressed', '~image/compressed'),
+            ('~joint_states', PathJoinSubstitution(['/', robot_namespace, 'joint_states']))
+        ]
     )
 
     ld = LaunchDescription()
     ld.add_action(arg_namespace)
     ld.add_action(arg_parameters)
+    ld.add_action(arg_robot_namespace)
     ld.add_action(axis_node)
     return ld
