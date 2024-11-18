@@ -65,7 +65,8 @@ def generate_launch_description():
         output='screen',
         remappings=[
             ('image_raw/compressed', 'image/compressed'),
-            ('joint_states', PathJoinSubstitution(['/', robot_namespace, 'joint_states']))
+            ('joint_states',
+                PathJoinSubstitution(['/', robot_namespace, 'platform', 'joint_states'])),
         ]
     )
 
